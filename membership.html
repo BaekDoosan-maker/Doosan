@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>회원가입</title>
+        <h1>아래 빈칸을 기입해주세요</h1>
+        <script>
+
+            $(document).ready(function () {
+
+                show_doosan();
+
+            });
+
+            function show_doosan() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/ds',
+                    data: {},
+                    success: function (response) {
+                        let rows = response['orders']
+                        for (let i = 0; i < rows.length; i++) {
+                            let id = rows[i]['id']
+                            let password = rows[i]['password']
+                            let passwordCheck = rows[i]['passwordCheck']
+                            let gender = rows[i]['gender']
+
+                            let temp_html = `<tr>
+                                                <td>${id}</td>
+                                                <td>${password}</td>
+                                                <td>${passwordCheck}</td>
+                                                <td>${gender}</td>
+                                            </tr>`
+                            $('#order-box').append(temp_html)
+                        }
+                    }
+                });
+            }
+
+
+            function save_doosan() {
+
+                let id = $('#id').val()
+                let password = $('#password').val()
+                let passwordCheck = $('#passwordCheck').val()
+                let gender = $('#gender').val()
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/ds',
+                    data: {id_give: id, password_give: password, passwordCheck_give: passwordCheck, gender_give: gender},
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+    <div class="mask"></div>
+    <div class="order"></div>
+    <h1>✋ 환영합니다~!!!🤚</h1>
+    <h3>환영환영환영환영</h3>
+    <p>
+        아이디 입력란에 @ 없으면 얼럿 뜨게 만들자<br/>
+        비밀번호 틀리면 빨갛게 되게 만들자
+    </p>
+    <div class="order-info">
+        <div class="input-group mb-3">
+            <span class="input-group-text">id</span>
+            <input id="id" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">password</span>
+            <input id="password" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">passwordCheck</span>
+            <input id="passwordCheck" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="gender">gender</label>
+            <select class="form-select" id="gender">
+                <option selected>-- gender --</option>
+                <option value="남자">male</option>
+                <option value="여자">women</option>
+
+            </select>
+        </div>
+        <button onclick="save_doosan()" type="button" class="btn btn-warning mybtn">회원가입하기😎</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">password</th>
+                <th scope="col">passwordCheck</th>
+                <th scope="col">gender</th>
+            </tr>
+        </thead>
+        <tbody id="order-box">
+
+        </tbody>
+    </table>
+    </body>
+</html>
