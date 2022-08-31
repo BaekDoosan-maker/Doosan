@@ -35,7 +35,7 @@
 
          let users = ["name1","name2","name3"];
 
-            let idd = document.getElementById("idd").value;
+            let idd = document.getElementById("id").value;
             for(let i=0; i < users.length; i++){
                 if(idd === users[i]){
                     document.getElementById("idd").value ="" ;
@@ -125,8 +125,8 @@
     <div class="order-info">
         <div class="input-group mb-3">
             <span class="input-group-text" placeholder="ID를 입력 해주세요.">*ID</span>
-            <input id="idd" type="text" class="form-control">
-           <button id="id" onclick="duplicationCheck()">중복체크</button>
+            <input id="id" type="text" class="form-control" >
+           <button id="idd" onclick="duplicationCheck()">중복체크</button>
         </div>
 
         <p></p>
